@@ -116,6 +116,9 @@
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="l08-Od-4fQ">
                             <inset key="imageInsets" minX="2" minY="2" maxX="2" maxY="2"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="RKU-7q-o7Q" kind="modal" id="IKO-la-3j8"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -126,7 +129,7 @@
             </objects>
             <point key="canvasLocation" x="1326" y="338"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Filter-->
         <scene sceneID="zrC-an-j4F">
             <objects>
                 <viewController id="ePJ-1A-Rcc" customClass="SettingsViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
@@ -138,32 +141,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-WL-VbH">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="48" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-WL-VbH">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="95" id="rmW-b6-MKg">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterCell" rowHeight="48" id="rmW-b6-MKg" customClass="FilterCell" customModule="Yelp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rmW-b6-MKg" id="MNA-HL-EBj">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zm2-SN-HUn">
+                                                    <rect key="frame" x="263" y="4" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="b5U-3n-WKe"/>
+                                                        <constraint firstAttribute="width" constant="49" id="l4h-qb-8dB"/>
+                                                    </constraints>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offering a deal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jp1-tP-Uaj">
+                                                    <rect key="frame" x="8" y="10" width="113" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="Zm2-SN-HUn" secondAttribute="centerY" constant="4.25" id="1q1-PL-roV"/>
+                                                <constraint firstItem="Jp1-tP-Uaj" firstAttribute="centerY" secondItem="Zm2-SN-HUn" secondAttribute="centerY" id="46D-Qg-PhK"/>
+                                                <constraint firstAttribute="trailing" secondItem="Zm2-SN-HUn" secondAttribute="trailing" constant="8" id="GWU-6l-4Os"/>
+                                                <constraint firstItem="Jp1-tP-Uaj" firstAttribute="leading" secondItem="MNA-HL-EBj" secondAttribute="leading" constant="8" id="Xfn-ro-e56"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="filterLabel" destination="Jp1-tP-Uaj" id="BcW-3P-YeZ"/>
+                                            <outlet property="filterSwitch" destination="Zm2-SN-HUn" id="oIr-mX-C27"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aUq-WL-VbH" firstAttribute="top" secondItem="dR6-kG-2m5" secondAttribute="top" id="Gmx-RQ-uYy"/>
-                            <constraint firstItem="aUq-WL-VbH" firstAttribute="leading" secondItem="dR6-kG-2m5" secondAttribute="leading" id="MRt-Z7-s7Y"/>
-                            <constraint firstAttribute="trailing" secondItem="aUq-WL-VbH" secondAttribute="trailing" id="Ug0-SS-0BX"/>
-                            <constraint firstItem="uNj-N5-0Yd" firstAttribute="top" secondItem="aUq-WL-VbH" secondAttribute="bottom" id="Z26-xR-xOu"/>
+                            <constraint firstAttribute="trailing" secondItem="aUq-WL-VbH" secondAttribute="trailing" id="U2z-D0-7HL"/>
+                            <constraint firstItem="aUq-WL-VbH" firstAttribute="leading" secondItem="dR6-kG-2m5" secondAttribute="leading" id="bXN-JD-v3j"/>
+                            <constraint firstItem="aUq-WL-VbH" firstAttribute="top" secondItem="dR6-kG-2m5" secondAttribute="top" id="qx0-qX-1LW"/>
+                            <constraint firstItem="uNj-N5-0Yd" firstAttribute="top" secondItem="aUq-WL-VbH" secondAttribute="bottom" id="r8r-aM-GxC"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Filter" id="nNS-9u-jzw">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="igH-d2-lP9">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onCancelButton:" destination="ePJ-1A-Rcc" id="Mii-Na-2qM"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="ta6-lO-xNb">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onSearchButton:" destination="ePJ-1A-Rcc" id="6P2-e8-Mfq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="aUq-WL-VbH" id="JnW-Pd-7dC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4VN-Xm-q98" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1665" y="338"/>
+            <point key="canvasLocation" x="2039" y="338"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="twq-b3-oW3">
@@ -186,6 +231,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfK-LU-tyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="953" y="338"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="iC1-WY-59P">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RKU-7q-o7Q" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2cE-zQ-Zx1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.70588235294117652" green="0.062745098039215685" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ePJ-1A-Rcc" kind="relationship" relationship="rootViewController" id="E3L-lm-jD6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vrb-M6-fMY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1679" y="338"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

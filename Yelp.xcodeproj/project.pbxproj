@@ -18,6 +18,7 @@
 		22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */; };
 		295095CA1B9AB00400AE2D7D /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295095C91B9AB00400AE2D7D /* BusinessCell.swift */; };
 		295095CC1B9BBEF500AE2D7D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295095CB1B9BBEF500AE2D7D /* SettingsViewController.swift */; };
+		295095CE1B9C04B400AE2D7D /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295095CD1B9C04B400AE2D7D /* FilterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessesViewController.swift; sourceTree = "<group>"; };
 		295095C91B9AB00400AE2D7D /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		295095CB1B9BBEF500AE2D7D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		295095CD1B9C04B400AE2D7D /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		97D8B2E3FFD1AF4F4A707E47 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BBD540129B10DFE60E8C24E2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C56EF0CE844A4EE5819C72AF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				295095C91B9AB00400AE2D7D /* BusinessCell.swift */,
+				295095CD1B9C04B400AE2D7D /* FilterCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				295095CE1B9C04B400AE2D7D /* FilterCell.swift in Sources */,
 				295095CA1B9AB00400AE2D7D /* BusinessCell.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
