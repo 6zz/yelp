@@ -116,13 +116,14 @@ extension BusinessesViewController: UISearchBarDelegate, SettingsViewControllerD
         var sortMode : YelpSortMode?
         let deals : Bool? = settings["deals"] as? Bool
         var categories = settings["categories"] as? [String]
+        let radius: Int? = settings["radius"] as? Int
         
  
         if let sort = sort {
             sortMode = YelpSortMode(rawValue: sort)
         }
         
-        Business.searchWithTerm("Restaurants", sort: sortMode, categories: categories, deals: deals) {
+        Business.searchWithTerm("Restaurants", sort: sortMode, categories: categories, deals: deals, radius: radius) {
             (businesses: [Business]!, error: NSError!) -> Void in
             
             self.businesses = businesses
