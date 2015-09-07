@@ -15,7 +15,12 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterCellDelegate {
 
     var categories : [[String:String]]!
-    var filterStates = [Int:Bool]()
+    let sortBy = [("Best Match", YelpSortMode.BestMatched), ("Distance", YelpSortMode.Distance), ("Highest Rated", YelpSortMode.HighestRated)]
+    var filterStates = [
+        [Int:Bool](),   // deals
+        [Int:Bool](),   // sort by
+        [Int:Bool]()    // categories
+    ]
     
     weak var delegate : SettingsViewControllerDelegate?
     
@@ -34,25 +39,78 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title : String!
+        
+        switch section {
+        case 0: title = ""
+        case 1: title = "Sort By"
+        default:
+            title = "Categories"
+        }
+        
+        return title
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return categories.count
+        var count : Int!
+        
+        switch section {
+        case 0: count = 1
+        case 1: count = 3
+        default:
+            count = categories.count
+        }
+        
+        return count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath) as! FilterCell
+        let section = indexPath.section
         
-        cell.filterLabel.text = categories[indexPath.row]["name"]
+        switch section {
+        case 0:
+            cell.filterLabel.text = "Offering a Deal"
+        case 1:
+            let (key, val) : (String, YelpSortMode) = sortBy[indexPath.row]
+            cell.filterLabel.text = key
+        default:
+            cell.filterLabel.text = categories[indexPath.row]["name"]
+        }
         cell.delegate = self
-        cell.filterSwitch.on = filterStates[indexPath.row] ?? false
+        if section < filterStates.count {
+            cell.filterSwitch.on = filterStates[section][indexPath.row] ?? false
+        } else {
+            cell.filterSwitch.on = false
+        }
 
         return cell
     }
     
     func filterCell(filterCell: FilterCell, didChangeValue value: Bool) {
         var indexPath = tableView.indexPathForCell(filterCell)!
+        let section = indexPath.section
         
-        filterStates[indexPath.row] = value
+        if section == 1 && value{
+            var sortBy = filterStates[section]
+            
+            // reset sortBy
+            for (k, v) in sortBy {
+                sortBy[k] = false
+            }
+            filterStates[section] = sortBy
+        }
+        
+        filterStates[section][indexPath.row] = value
+        if section == 1 {
+            updateSortByCells(filterStates[section])
+        }
     }
     
     @IBAction func onCancelButton(sender: AnyObject) {
@@ -60,22 +118,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         dismissViewControllerAnimated(true, completion: nil)
     }
 
-    @IBAction func onSearchButton(sender:
-        AnyObject) {
+    @IBAction func onSearchButton(sender: AnyObject)
+    {
+        var settings = [String: AnyObject]()
+        let dealsSetting: Bool = getDealsSetting(filterStates[0]);
+        let sortbySetting = getSortbySetting(filterStates[1]);
+        let categorySetting = getCategorySetting(filterStates[2]);
         
-            var settings = [String: AnyObject]()
-            var selectedCategories = [String]()
+        settings["deals"] = dealsSetting
+        if let sortbySetting = sortbySetting {
+            settings["sortBy"] = sortbySetting
+        }
+        if categorySetting.count > 0 {
+            settings["categories"] = categorySetting
+        }
         
-            for (row, isSelected) in filterStates {
-                if isSelected {
-                    selectedCategories.append(categories[row]["code"]!)
-                }
-            }
-            NSLog("\(selectedCategories)")
-            if selectedCategories.count > 0 {
-                settings["categories"] = selectedCategories
-            }
         dismissViewControllerAnimated(true, completion: nil)
+        
         delegate?.settingsViewController?(self, didUpdateSettings: settings)
     }
     
@@ -251,6 +310,44 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             ["name" : "Wraps", "code": "wraps"],
             ["name" : "Yugoslav", "code": "yugoslav"]
         ]
+    }
+    
+    private func updateSortByCells(state: [Int:Bool]) {
+        let sectionIndexSet = NSIndexSet(index: 1)
+        tableView.reloadSections(sectionIndexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
+    }
+    
+    private func getDealsSetting(state: [Int:Bool]) -> Bool {
+        var dealsOn = false
+        for (row, isSelected) in state {
+            if isSelected {
+                dealsOn = true
+                break;
+            }
+        }
+        return dealsOn
+    }
+
+    private func getSortbySetting(state: [Int:Bool]) -> Int? {
+        var mode : Int? = nil
+        
+        for (row, isSelected) in state {
+            if isSelected {
+                mode = row
+            }
+        }
+        
+        return mode
+    }
+    
+    private func getCategorySetting(state: [Int:Bool]) -> [String] {
+        var selectedCategories = [String]()
+        for (row, isSelected) in state {
+            if isSelected {
+                selectedCategories.append(self.categories[row]["code"]!)
+            }
+        }
+        return selectedCategories
     }
 
 }

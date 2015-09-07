@@ -112,8 +112,17 @@ extension BusinessesViewController: UISearchBarDelegate, SettingsViewControllerD
     }
     
     func settingsViewController(settingsViewController: SettingsViewController, didUpdateSettings settings: [String : AnyObject]) {
-        var categories = settings["categories"] as! [String]
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) {
+        let sort : Int? = settings["sortBy"] as? Int
+        var sortMode : YelpSortMode?
+        let deals : Bool? = settings["deals"] as? Bool
+        var categories = settings["categories"] as? [String]
+        
+ 
+        if let sort = sort {
+            sortMode = YelpSortMode(rawValue: sort)
+        }
+        
+        Business.searchWithTerm("Restaurants", sort: sortMode, categories: categories, deals: deals) {
             (businesses: [Business]!, error: NSError!) -> Void in
             
             self.businesses = businesses
