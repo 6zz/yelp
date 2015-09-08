@@ -15,9 +15,17 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterCellDelegate {
 
     var categories : [[String:String]]!
-    let sortBy = [("Best Match", YelpSortMode.BestMatched), ("Distance", YelpSortMode.Distance), ("Highest Rated", YelpSortMode.HighestRated)]
+    let sortChoices = ["Best Match", "Distance", "Highest Rated"]
+    let radiusChoices: [(String, Int?)] = [
+        ("Auto", nil),
+        ("0.3 Miles", 483),
+        ("1 Miles", 1609),
+        ("5 Miles", 8047),
+        ("20 Miles", 32187)
+    ]
     var filterStates = [
         [Int:Bool](),   // deals
+        [Int:Bool](),   // radius
         [Int:Bool](),   // sort by
         [Int:Bool]()    // categories
     ]
@@ -40,7 +48,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return filterStates.count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -48,7 +56,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch section {
         case 0: title = ""
-        case 1: title = "Sort By"
+        case 1: title = "Distance"
+        case 2: title = "Sort By"
         default:
             title = "Categories"
         }
@@ -62,7 +71,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch section {
         case 0: count = 1
-        case 1: count = 3
+        case 1: count = radiusChoices.count
+        case 2: count = sortChoices.count
         default:
             count = categories.count
         }
@@ -78,8 +88,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         case 0:
             cell.filterLabel.text = "Offering a Deal"
         case 1:
-            let (key, val) : (String, YelpSortMode) = sortBy[indexPath.row]
-            cell.filterLabel.text = key
+            let (k,m) = radiusChoices[indexPath.row]
+            cell.filterLabel.text = k
+        case 2:
+            cell.filterLabel.text = sortChoices[indexPath.row]
         default:
             cell.filterLabel.text = categories[indexPath.row]["name"]
         }
@@ -97,20 +109,18 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         var indexPath = tableView.indexPathForCell(filterCell)!
         let section = indexPath.section
         
-        if section == 1 && value{
-            var sortBy = filterStates[section]
+        if 1...2 ~= section && value{
+            var states = filterStates[section]
             
             // reset sortBy
-            for (k, v) in sortBy {
-                sortBy[k] = false
+            for (k, v) in states {
+                states[k] = false
             }
-            filterStates[section] = sortBy
+            filterStates[section] = states
         }
         
         filterStates[section][indexPath.row] = value
-        if section == 1 {
-            updateSortByCells(filterStates[section])
-        }
+        updateUICells(section)
     }
     
     @IBAction func onCancelButton(sender: AnyObject) {
@@ -122,10 +132,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     {
         var settings = [String: AnyObject]()
         let dealsSetting: Bool = getDealsSetting(filterStates[0]);
-        let sortbySetting = getSortbySetting(filterStates[1]);
-        let categorySetting = getCategorySetting(filterStates[2]);
+        let radius: Int? = getRadiusSetting(filterStates[1])
+        let sortbySetting = getSortbySetting(filterStates[2]);
+        let categorySetting = getCategorySetting(filterStates[3]);
         
         settings["deals"] = dealsSetting
+        settings["radius"] = radius
         if let sortbySetting = sortbySetting {
             settings["sortBy"] = sortbySetting
         }
@@ -312,9 +324,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         ]
     }
     
-    private func updateSortByCells(state: [Int:Bool]) {
-        let sectionIndexSet = NSIndexSet(index: 1)
-        tableView.reloadSections(sectionIndexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
+    private func updateUICells(section: Int) {
+        if 1...2 ~= section {
+            let sectionIndexSet = NSIndexSet(index: section)
+            tableView.reloadSections(sectionIndexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     private func getDealsSetting(state: [Int:Bool]) -> Bool {
@@ -334,10 +348,25 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         for (row, isSelected) in state {
             if isSelected {
                 mode = row
+                break
             }
         }
         
         return mode
+    }
+
+    private func getRadiusSetting(state: [Int:Bool]) -> Int? {
+        var radius : Int? = nil
+        
+        for (row, isSelected) in state {
+            if isSelected {
+                let (k, m) = radiusChoices[row]
+                radius = m
+                break
+            }
+        }
+        
+        return radius
     }
     
     private func getCategorySetting(state: [Int:Bool]) -> [String] {
