@@ -54,6 +54,7 @@ class BusinessCell: UITableViewCell {
     private func preferredMaxLayoutWidth() {
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
         addressLabel.preferredMaxLayoutWidth = addressLabel.frame.size.width
+        categoriesLabel.preferredMaxLayoutWidth = categoriesLabel.frame.size.width
     }
 
 }

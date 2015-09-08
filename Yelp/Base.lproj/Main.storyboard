@@ -57,14 +57,14 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="0.8mi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-ko-fem">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="0.8mi" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-ko-fem">
                                                     <rect key="frame" x="281" y="8" width="31" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="British, Fish &amp; Chips, Seafood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7R-RT-x2S">
-                                                    <rect key="frame" x="81" y="64" width="154" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="British, Fish &amp; Chips, Seafood" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7R-RT-x2S">
+                                                    <rect key="frame" x="81" y="64" width="231" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -86,6 +86,7 @@
                                                 <constraint firstItem="mtN-wo-1KK" firstAttribute="centerY" secondItem="OuZ-hs-sqZ" secondAttribute="centerY" id="fxE-Tz-rX0"/>
                                                 <constraint firstItem="Hrt-Np-6QH" firstAttribute="trailing" secondItem="gSz-ko-fem" secondAttribute="trailing" id="gMh-2w-SGa"/>
                                                 <constraint firstItem="TJi-ae-jsQ" firstAttribute="top" secondItem="Vwy-Bn-Zfd" secondAttribute="top" constant="8" id="kbf-S2-coh"/>
+                                                <constraint firstItem="gSz-ko-fem" firstAttribute="trailing" secondItem="E7R-RT-x2S" secondAttribute="trailing" id="oWG-7j-cNR"/>
                                                 <constraint firstItem="Hrt-Np-6QH" firstAttribute="leading" secondItem="E7R-RT-x2S" secondAttribute="leading" id="oZQ-9W-JGX"/>
                                                 <constraint firstItem="OuZ-hs-sqZ" firstAttribute="leading" secondItem="mtN-wo-1KK" secondAttribute="trailing" constant="8" id="pVq-gS-4F4"/>
                                                 <constraint firstItem="Hrt-Np-6QH" firstAttribute="leading" secondItem="mtN-wo-1KK" secondAttribute="leading" id="yK2-6D-5Zr"/>
